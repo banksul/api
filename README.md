@@ -1,24 +1,23 @@
 
-# BANKSUL API V1
-Seja bem-vindo à documentação da Bansul. 
-Documentação de API para usuários e parceiros.
+# API Pública Banksul 
+Documentação da API para usuários e parceiros do BankSul.
 
+1. [Visão geral](#visaogeral)
+1. [Checkout](#checkout)
+    1. [create](#create)
+    1. [Upgrading](#upgrading)
+    1. [Upgrading](#upgrading)
+1. [Duvidas](#Duvidas)
 
-* [Token](#Token)
-* [Endpoint](#endpoint)
-* [Checkout](#checkout)
-* [Duvidas](#Duvidas)
+## Visão geral
 
- 
-## Token
 Para utilização da API é necessário:
 
-  1. Criar uma conta em https://app.bansul.com
+  1. Criar uma conta em https://app.banksul.com
   2. Validar sua conta enviando seus documentos.
   3. Criar um token com os dados do servidor de origem. Acesse o menu API -> Criar Token.
 
 
-## Endpoint
 Todas as respostas da API são em realizadas em JSON e as requisições são feitas no endpoint:
 
 <pre>https://api.banksul.com</pre>
@@ -43,17 +42,19 @@ Conforme os exemplos abaixo:
 }
 </pre>
 
- 
+
 ## Checkout
 
-Criar uma página de pagamento em ambiente seguro. 
+Ambiente seguro uma página de pagamento em ambiente seguro.
 
-### Criar página de Checkout
 
-* Cria uma nova ordem de pagamento em sua conta e envia o usuário para um ambiente seguro com opção de pagamento em boleto bancário ou bitcoin. 
+### create
+
+* Cria uma nova ordem de pagamento em sua conta e envia o usuário para um ambiente seguro com opção de pagamento em boleto bancário ou bitcoin.
 * Não é necessário o usuário possuir uma conta na Banksul para acessar a página de pagamento.
 * O sistema dispara um e-mail para o usuário com o link do pagamento.
-* Caso ele tenha uma conta na Banksul, ele pode utilizar o código da ordem de pagamento e efetuar o pagamento diretamente com o saldo em sua conta. 
+* Caso ele tenha uma conta na Banksul, ele pode utilizar o código da ordem de pagamento e efetuar o pagamento diretamente com o saldo em sua conta.
+
 
 Endpoint: `/v2/checkout/create`
 
@@ -65,10 +66,11 @@ Query Parameters:
   * `email` - e-mail valido (string | optional) * caso seja informado será enviado o link de pagamento para o email.
   * `url_return` - url de retorno * Quando houver alguma interação neste fatura será disparado um get na url informada.
 
-Codificação de URI de um objeto JSON em PHP:
+Exemplo em PHP:
 
 ```php
 <?php
+
   $token = "";
   $data = json_encode(array(
         "id" => 81112,
