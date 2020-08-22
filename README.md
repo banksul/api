@@ -1,5 +1,5 @@
 
-# API Pública Banksul 
+# API Pública Banksul
 Documentação da API para usuários e parceiros do BankSul.
 
 1. [Visão geral](#visaogeral)
@@ -46,16 +46,12 @@ Conforme os exemplos abaixo:
 
 ## Checkout
 
-Ambiente seguro uma página de pagamento em ambiente seguro.
-
+* Gera uma nova ordem de pagamento em sua conta, disponibilizando ao usuário um ambiente seguro com opção de pagamento em boleto bancário ou Bitcoin.
+* Não é necessário o usuário possuir uma conta na Banksul para acessar a página de pagamento.
+* O sistema dispara automaticamente um e-mail para o usuário com o link do pagamento.
+* Caso ele tenha uma conta na Banksul, ele pode utilizar o código gerado e efetuar o pagamento diretamente com o saldo em sua conta.
 
 ### Criar
-
-* Cria uma nova ordem de pagamento em sua conta e envia o usuário para um ambiente seguro com opção de pagamento em boleto bancário ou bitcoin.
-* Não é necessário o usuário possuir uma conta na Banksul para acessar a página de pagamento.
-* O sistema dispara um e-mail para o usuário com o link do pagamento.
-* Caso ele tenha uma conta na Banksul, ele pode utilizar o código da ordem de pagamento e efetuar o pagamento diretamente com o saldo em sua conta.
-
 
 Endpoint: `/v2/checkout/create`
 
