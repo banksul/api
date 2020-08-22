@@ -48,12 +48,12 @@ Conforme os exemplos abaixo:
 
 Criar uma página de pagamento em ambiente seguro. 
 
+### Criar página de Checkout
+
 * Cria uma nova ordem de pagamento em sua conta e envia o usuário para um ambiente seguro com opção de pagamento em boleto bancário ou bitcoin. 
 * Não é necessário o usuário possuir uma conta na Banksul para acessar a página de pagamento.
 * O sistema dispara um e-mail para o usuário com o link do pagamento.
 * Caso ele tenha uma conta na Banksul, ele pode utilizar o código da ordem de pagamento e efetuar o pagamento diretamente com o saldo em sua conta. 
-
-
 
 Endpoint: `/v2/checkout/create`
 
