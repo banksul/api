@@ -4,10 +4,11 @@ Documentação da API para usuários e parceiros do BankSul.
 
 1. [Visão geral](#visaogeral)
 1. [Checkout](#checkout)
-    1. [create](#create)
-    1. [Upgrading](#upgrading)
-    1. [Upgrading](#upgrading)
-1. [Duvidas](#Duvidas)
+    1. [Criar](#checkout_create)
+    1. [Atualizar](#checkout_update)
+    1. [Consultar](#checkout_search)
+    1. [Pesquisa Personalizada](#checkout_all)
+1. [Dúvidas](#duvidas)
 
 ## Visão geral
 
@@ -48,7 +49,7 @@ Conforme os exemplos abaixo:
 Ambiente seguro uma página de pagamento em ambiente seguro.
 
 
-### create
+### Criar
 
 * Cria uma nova ordem de pagamento em sua conta e envia o usuário para um ambiente seguro com opção de pagamento em boleto bancário ou bitcoin.
 * Não é necessário o usuário possuir uma conta na Banksul para acessar a página de pagamento.
