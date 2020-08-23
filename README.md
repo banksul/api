@@ -2,13 +2,13 @@
 # API Pública Banksul
 Documentação da API para usuários e parceiros do BankSul.
 
-1. [Visão geral](#visaogeral)
+1. [Visão geral](#Visão-geral)
 1. [Checkout](#checkout)
-    1. [Criar](#checkout_create)
-    1. [Atualizar](#checkout_update)
-    1. [Consultar](#checkout_search)
-    1. [Pesquisa Personalizada](#checkout_all)
-1. [Dúvidas](#duvidas)
+    1. [Checkout - Criar](#Criar)
+    1. [Checkout - Atualizar](#checkout_update)
+    1. [Checkout - Consultar](#checkout_search)
+    1. [Checkout - Pesquisa Personalizada](#checkout_all)
+1. [Dúvidas](#dúvidas)
 
 ## Visão geral
 
@@ -51,7 +51,7 @@ Conforme os exemplos abaixo:
 * O sistema dispara automaticamente um e-mail para o usuário com o link do pagamento.
 * Caso ele tenha uma conta na Banksul, ele pode utilizar o código gerado e efetuar o pagamento diretamente com o saldo em sua conta.
 
-### Criar
+### Checkout - Criar
 
 Endpoint: `/v2/checkout/create`
 
@@ -128,7 +128,7 @@ Resposta:
 ```
 
 
-### Atualizar
+### Checkout - Atualizar
 Para realizar uma alteração na ordem gerada é necessário enviar o mesmo token e id enviado anteriormente. Para atualizar a ordem precisa está em aberto com status 'waiting'. Caso já o status seja 'paid' não será possível atualizar.
 
 Endpoint: `/v2/checkout/update`
