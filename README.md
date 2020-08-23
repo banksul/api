@@ -60,13 +60,12 @@ Query Parameters:
   * `id` - codigo da fatura gerada  (Integer | required)
   * `title` - Descrição da fatura (string | required)
   * `value` - valor da fatura (decimal | required)
-  * `email` - e-mail valido (string | optional) * caso seja informado será enviado o link de pagamento para o email.
+  * `email` - e-mail válido (string | optional) * caso seja informado será enviado o link de pagamento para o email.
   * `url_return` - url de retorno * Quando houver alguma interação neste fatura será disparado um get na url informada.
 
 Exemplo em PHP:
 
 ```php
-<?php
 
   $token = "";
   $data = json_encode(array(
@@ -106,7 +105,86 @@ Exemplo em PHP:
     } else {
       echo $response;
     }
-?>
+
+```
+
+Resposta:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "81112",
+    "id_banksul": "OxhyaDbKuHVQ",
+    "date": "2020-08-22 00:06:12",
+    "date_payment": null,
+    "status": "waiting",
+    "title": "Leadership: Practical Leadership Skills",
+    "value": "98.78",
+    "url_return": "http://www.meusite.com/retorno/pay/81112",
+    "checkout_banksul": "https://app.banksul.com/payment/7c6feb806a501f5dd7c3b3d5fc540cafff3cf9cf77cd5deb0ca66d51302990b1"
+  }
+}
+```
+
+
+### Atualizar
+Para realizar uma alteração na ordem gerada é necessário enviar o mesmo token e id enviado anteriormente. Para atualizar a ordem precisa está em aberto com status 'waiting'. Caso já o status seja 'paid' não será possível atualizar.
+
+Endpoint: `/v2/checkout/update`
+
+Query Parameters:
+
+  * `id` - codigo da fatura gerada  (Integer | required)
+  * `title` - Descrição da fatura (string | required)
+  * `value` - valor da fatura (decimal | required)
+  * `email` - e-mail válido (string | optional) * caso seja informado será enviado o link de pagamento para o email.
+  * `url_return` - Url de retorno * Quando houver alguma interação neste fatura será disparado um get na url informada.
+
+Exemplo em PHP:
+
+```php
+
+
+  $token = "";
+  $data = json_encode(array(
+        "id" => 81112,
+        "email" => 'email2@email.com',
+        "title" => "Leadership: Practical Leadership Skills",
+        "value" => 100.78,
+        "url_return" => "http://www.seusite.com/retorno/pay/81112",
+       ));
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://api.banksul.com/v2/checkout/update',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => false,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => $data,
+      CURLOPT_HTTPHEADER => array(
+        "Content-Type: application/json",
+        'Content-Length: ' . strlen( $data ),
+        'Authentication:  '.$token
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+      echo "cURL Error #:" . $err;
+    } else {
+      echo $response;
+    }
+
 ```
 
 Resposta:
@@ -130,6 +208,6 @@ Resposta:
 
 
 
-## Duvidas
+## Dúvidas
 
 Mande um e-mail para suporte@banksul.com em caso de dúvidas ou sugestões de melhorias e integrações da API.
