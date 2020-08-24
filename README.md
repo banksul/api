@@ -2,13 +2,12 @@
 # API Pública Banksul
 Documentação da API para usuários e parceiros do BankSul.
 
-1. [Visão geral](#Visão-geral)
+1. [Visão geral](#visao-geral)
 1. [Checkout](#checkout)
     1. [Checkout - Criar](#checkout---criar)
     1. [Checkout - Atualizar](#checkout---atualizar)
     1. [Checkout - Status](#checkout---status)
     1. [Checkout - Buscar](#checkout---buscar)
-    
 2. [User](#user)    
 3. [Dúvidas](#dúvidas)
 
