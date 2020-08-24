@@ -5,10 +5,12 @@ Documentação da API para usuários e parceiros do BankSul.
 1. [Visão geral](#visao-geral)
 1. [Checkout](#checkout)
     1. [Checkout - Criar](#checkout---criar)
-    1. [Checkout - Atualizar](#checkout---atualizar)
-    1. [Checkout - Status](#checkout---status)
-    1. [Checkout - Buscar](#checkout---buscar)
+    2. [Checkout - Atualizar](#checkout---atualizar)
+    3. [Checkout - Status](#checkout---status)
+    4. [Checkout - Buscar](#checkout---buscar)
 2. [User](#user)    
+3. [Bank](#bank)
+    1. [Bank - Balance](#bank---balance)
 3. [Dúvidas](#dúvidas)
 
 ## Visão geral
@@ -430,6 +432,65 @@ Resposta:
 ```
 
 * Documentação e endereço somente é disponibilizado na API checkout após o pagamento pelo cliente.
+
+
+
+## Bank
+
+### Bank - Balance
+
+Endpoint: `/v2/bank/balance`
+
+Exemplo em PHP:
+
+```php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.banksul.com/v2/bank/balance',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => false,
+  CURLOPT_HTTP_VERSION =>
+  CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "Content-Type: application/json",
+    'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI3MWVlNDVhM2MwZGI5YTk4NjVmNzMxM2RkMzM3MmNmNjBkY2E2NDc5ZDQ2MjYxZjM1NDJlYjkzNDZlNGEwNGQ2IiwiZW1haWwiOiJjb250YXRvQG1heGlzcGx1cy5jb20iLCJpYXQiOjE1OTgzMTI5MzV9.1QffyVA8PwPH7QP8fdEFUx6MStk-_l52K_kTevHnGBA'
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+
+```
+
+Resposta:
+
+```json
+{
+  "success": true,
+  "data": {
+    "BRL": "359.80",
+    "BTC": "0.09500000"
+  }
+}
+```
+
+  * `BRL` - Saldo disponível em Reais 
+  * `BTC` - Saldo disponível em Bitcoin 
+
 
 
 ## Dúvidas
