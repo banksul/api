@@ -8,7 +8,9 @@ Documentação da API para usuários e parceiros do BankSul.
     1. [Checkout - Atualizar](#checkout---atualizar)
     1. [Checkout - Status](#checkout---status)
     1. [Checkout - Buscar](#checkout---buscar)
-1. [Dúvidas](#dúvidas)
+    
+2. [User](#user)    
+3. [Dúvidas](#dúvidas)
 
 ## Visão geral
 
@@ -368,6 +370,67 @@ Resposta:
 ** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
 ** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
 ** date_payment - trata-se de todas as faturas pagas.
+
+
+
+
+## User
+
+Endpoint: `/v2/user/search/:user`
+
+Query Parameters:
+
+  * `user` - nome do usuário no banksul.  (string | required)
+
+Exemplo em PHP:
+
+```php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.banksul.com/v2/user/search/brunox',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => false,
+  CURLOPT_HTTP_VERSION =>
+  CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "Content-Type: application/json",
+    'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzZDkxNGY5MzQ4YzljYzBmZjhhNzk3MTY3MDBiOWZjZDRkMmYzZTcxMTYwODAwNGViOGYxMzhiY2JhN2YxNGQ5IiwiZW1haWwiOiJ3c2NvcGVsQGdtYWlsLmNvbSIsImlhdCI6MTU5Nzk2ODAwNH0.pCpOf-OKpw8NMXhFqvYWHiXCdgOUqhbuT1jSGbGDZpI'
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+
+```
+
+Resposta:
+
+```json
+{
+  "success": true,
+  "data": {
+    "name": "Bruno Souza Oliveira",
+    "user": "brunox",
+    "email": "bruno@bruno.com"
+  }
+}
+```
+
+* Documentação e endereço somente é disponibilizado na API checkout após o pagamento pelo cliente.
 
 
 ## Dúvidas
