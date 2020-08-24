@@ -4,10 +4,10 @@ Documentação da API para usuários e parceiros do BankSul.
 
 1. [Visão geral](#Visão-geral)
 1. [Checkout](#checkout)
-    1. [Checkout - Criar](#Criar)
-    1. [Checkout - Atualizar](#checkout_update)
-    1. [Checkout - Consultar](#checkout_search)
-    1. [Checkout - Pesquisa Personalizada](#checkout_all)
+    1. [Checkout - Criar](#checkout---criar)
+    1. [Checkout - Atualizar](#checkout---atualizar)
+    1. [Checkout - Status](#checkout---status)
+    1. [Checkout - Buscar](#checkout---buscar)
 1. [Dúvidas](#dúvidas)
 
 ## Visão geral
@@ -57,7 +57,7 @@ Endpoint: `/v2/checkout/create`
 
 Query Parameters:
 
-  * `id` - codigo da fatura gerada  (Integer | required)
+  * `id` - codigo da fatura gerada  (integer | required)
   * `title` - Descrição da fatura (string | required)
   * `value` - valor da fatura (decimal | required)
   * `email` - e-mail válido (string | optional) * caso seja informado será enviado o link de pagamento para o email.
@@ -67,44 +67,43 @@ Exemplo em PHP:
 
 ```php
 
-  $token = "";
-  $data = json_encode(array(
-        "id" => 81112,
-        "email" => 'email@email.com',
-        "title" => "Leadership: Practical Leadership Skills",
-        "value" => 98.78,
-        "url_return" => "http://www.seusite.com/retorno/pay/81112",
-       ));
+$data = json_encode(array(
+      "id" => 1001,
+      "email" => 'email@email.com',
+      "title" => "Leadership: Practical Leadership Skills",
+      "value" => 99.78,
+      "url_return" => "http://www.meusite.com/retorno/checkout/1001",
+     ));
 
-    $curl = curl_init();
+  $curl = curl_init();
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://api.banksul.com/v2/checkout/create',
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => false,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => $data,
-      CURLOPT_HTTPHEADER => array(
-        "Content-Type: application/json",
-        'Content-Length: ' . strlen( $data ),
-        'Authentication:  '.$token
-      ),
-    ));
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.banksul.com/v2/checkout/update',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => false,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => $data,
+    CURLOPT_HTTPHEADER => array(
+      "Content-Type: application/json",
+      'Content-Length: ' . strlen( $data ),
+      'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzZDkxNGY5MzQ4YzljYzBmZjhhNzk3MTY3MDBiOWZjZDRkMmYzZTcxMTYwODAwNGViOGYxMzhiY2JhN2YxNGQ5IiwiZW1haWwiOiJ3c2NvcGVsQGdtYWlsLmNvbSIsImlhdCI6MTU5Nzk2ODAwNH0.pCpOf-OKpw8NMXhFqvYWHiXCdgOUqhbuT1jSGbGDZpI'
+    ),
+  ));
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
 
-    curl_close($curl);
+  curl_close($curl);
 
-    if ($err) {
-      echo "cURL Error #:" . $err;
-    } else {
-      echo $response;
-    }
+  if ($err) {
+    echo "cURL Error #:" . $err;
+  } else {
+    echo $response;
+  }
 
 ```
 
@@ -114,18 +113,21 @@ Resposta:
 {
   "success": true,
   "data": {
-    "id": "81112",
-    "id_banksul": "OxhyaDbKuHVQ",
-    "date": "2020-08-22 00:06:12",
+    "id": "1001",
+    "id_banksul": "Ox99dae535",
+    "date": "2020-08-23 19:17:18",
     "date_payment": null,
     "status": "waiting",
+    "customer": {},
     "title": "Leadership: Practical Leadership Skills",
-    "value": "98.78",
-    "url_return": "http://www.meusite.com/retorno/pay/81112",
-    "checkout_banksul": "https://app.banksul.com/payment/7c6feb806a501f5dd7c3b3d5fc540cafff3cf9cf77cd5deb0ca66d51302990b1"
+    "value": "99.78",
+    "url_return": "http:\/\/www.meusite.com\/retorno\/checkout\/1001",
+    "checkout_banksul": "https:\/\/app.banksul.com\/payment\/1c596b4fdcac980e9c5d2c3a79ee92ec"
   }
 }
 ```
+
+* `checkout_banksul` -  Redirecione seu cliente para esse link para concluir o pagamento.
 
 
 ### Checkout - Atualizar
@@ -135,7 +137,7 @@ Endpoint: `/v2/checkout/update`
 
 Query Parameters:
 
-  * `id` - codigo da fatura gerada  (Integer | required)
+  * `id` - codigo da fatura gerada  (integer | required)
   * `title` - Descrição da fatura (string | required)
   * `value` - valor da fatura (decimal | required)
   * `email` - e-mail válido (string | optional) * caso seja informado será enviado o link de pagamento para o email.
@@ -144,46 +146,43 @@ Query Parameters:
 Exemplo em PHP:
 
 ```php
+$data = json_encode(array(
+      "id" => 1001,
+      "email" => 'email@email.com',
+      "title" => "Leadership: Practical Leadership Skills - Premium",
+      "value" => 999.78,
+      "url_return" => "http://www.meusite.com/retorno/checkout/1001",
+     ));
 
+  $curl = curl_init();
 
-  $token = "";
-  $data = json_encode(array(
-        "id" => 81112,
-        "email" => 'email2@email.com',
-        "title" => "Leadership: Practical Leadership Skills",
-        "value" => 100.78,
-        "url_return" => "http://www.seusite.com/retorno/pay/81112",
-       ));
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.banksul.com/v2/checkout/update',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => false,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => $data,
+    CURLOPT_HTTPHEADER => array(
+      "Content-Type: application/json",
+      'Content-Length: ' . strlen( $data ),
+      'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzZDkxNGY5MzQ4YzljYzBmZjhhNzk3MTY3MDBiOWZjZDRkMmYzZTcxMTYwODAwNGViOGYxMzhiY2JhN2YxNGQ5IiwiZW1haWwiOiJ3c2NvcGVsQGdtYWlsLmNvbSIsImlhdCI6MTU5Nzk2ODAwNH0.pCpOf-OKpw8NMXhFqvYWHiXCdgOUqhbuT1jSGbGDZpI'
+    ),
+  ));
 
-    $curl = curl_init();
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => 'https://api.banksul.com/v2/checkout/update',
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => false,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => $data,
-      CURLOPT_HTTPHEADER => array(
-        "Content-Type: application/json",
-        'Content-Length: ' . strlen( $data ),
-        'Authentication:  '.$token
-      ),
-    ));
+  curl_close($curl);
 
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-      echo "cURL Error #:" . $err;
-    } else {
-      echo $response;
-    }
+  if ($err) {
+    echo "cURL Error #:" . $err;
+  } else {
+    echo $response;
+  }
 
 ```
 
@@ -193,19 +192,182 @@ Resposta:
 {
   "success": true,
   "data": {
-    "id": "81112",
-    "id_banksul": "OxhyaDbKuHVQ",
-    "date": "2020-08-22 00:06:12",
+    "id": "1001",
+    "id_banksul": "Ox99dae535",
+    "date": "2020-08-23 19:17:18",
     "date_payment": null,
     "status": "waiting",
-    "title": "Leadership: Practical Leadership Skills",
-    "value": "98.78",
-    "url_return": "http://www.meusite.com/retorno/pay/81112",
-    "checkout_banksul": "https://app.banksul.com/payment/7c6feb806a501f5dd7c3b3d5fc540cafff3cf9cf77cd5deb0ca66d51302990b1"
+    "title": "Leadership: Practical Leadership Skills - Premium",
+    "value": "999.78",
+    "url_return": "http:\/\/www.meusite.com\/retorno\/checkout\/1001",
+    "checkout_banksul": "https:\/\/app.banksul.com\/payment\/1c596b4fdcac980e9c5d2c3a79ee92ec"
   }
 }
 ```
 
+
+### Checkout - Status
+
+Endpoint: `/v2/checkout/status/:id`
+
+Query Parameters:
+
+  * `id` - codigo da fatura gerada  (integer | required)
+
+Exemplo em PHP:
+
+```php
+
+  $id = 1001;
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.banksul.com/v2/checkout/status/'.$id,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => false,
+    CURLOPT_HTTP_VERSION =>
+    CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_HTTPHEADER => array(
+      "Content-Type: application/json",
+      'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzZDkxNGY5MzQ4YzljYzBmZjhhNzk3MTY3MDBiOWZjZDRkMmYzZTcxMTYwODAwNGViOGYxMzhiY2JhN2YxNGQ5IiwiZW1haWwiOiJ3c2NvcGVsQGdtYWlsLmNvbSIsImlhdCI6MTU5Nzk2ODAwNH0.pCpOf-OKpw8NMXhFqvYWHiXCdgOUqhbuT1jSGbGDZpI'
+    ),
+  ));
+
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+
+  curl_close($curl);
+
+  if ($err) {
+    echo "cURL Error #:" . $err;
+  } else {
+    echo $response;
+  }
+
+```
+
+Resposta:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "1001",
+    "id_banksul": "Ox99dae535",
+    "title": "Leadership: Practical Leadership Skills - Premium",
+    "value": "999.78",
+    "customer": {
+      "name": "Bruno Camargos Lipaus",
+      "user": "brunolipaus",
+      "email": "email@outlook.com"
+    },
+    "date": "2020-08-23 19:17:18",
+    "date_payment": null,
+    "status": "waiting",
+    "url_return": "http:\/\/www.meusite.com\/retorno\/checkout\/1001"
+  }
+}
+```
+** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+
+
+### Checkout - Buscar
+
+Endpoint: `/v2/checkout/search`
+
+Query Parameters:
+
+* `date_min` - Data inicial (date)
+* `date_max` - Data Final   (date)
+* `date_payment_min` - Data de pagamento inicial (date)
+* `date_payment_max` - Data de pagamento Final   (date)
+* `limit` - Quantidade de registros retornados (integer | required)
+* `order_by` - ASC ou DESC (string | required)
+
+Exemplo em PHP:
+
+```php
+
+$data = json_encode(array(
+      'date_min' => '2020-01-01',
+      'date_max' => '2020-12-31',
+      'date_payment_min' => '',
+      'date_payment_max' => '',
+      'limit' => 100,
+      'order_by' => 'asc', //1 - crescente 2- decrescente
+     ));
+
+     $curl = curl_init();
+
+     curl_setopt_array($curl, array(
+       CURLOPT_URL => 'https://api.banksul.com/v2/checkout/search',
+       CURLOPT_RETURNTRANSFER => true,
+       CURLOPT_ENCODING => "",
+       CURLOPT_MAXREDIRS => 10,
+       CURLOPT_TIMEOUT => 0,
+       CURLOPT_FOLLOWLOCATION => false,
+       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+       CURLOPT_CUSTOMREQUEST => "POST",
+       CURLOPT_POSTFIELDS => $data,
+       CURLOPT_HTTPHEADER => array(
+         "Content-Type: application/json",
+         'Content-Length: ' . strlen( $data ),
+         'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzZDkxNGY5MzQ4YzljYzBmZjhhNzk3MTY3MDBiOWZjZDRkMmYzZTcxMTYwODAwNGViOGYxMzhiY2JhN2YxNGQ5IiwiZW1haWwiOiJ3c2NvcGVsQGdtYWlsLmNvbSIsImlhdCI6MTU5Nzk2ODAwNH0.pCpOf-OKpw8NMXhFqvYWHiXCdgOUqhbuT1jSGbGDZpI'
+       ),
+     ));
+
+     $response = curl_exec($curl);
+     $err = curl_error($curl);
+
+     curl_close($curl);
+
+     if ($err) {
+       echo "cURL Error #:" . $err;
+     } else {
+       echo $response;
+     }
+
+```
+
+Resposta:
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "1904",
+      "id_banksul": "Ox07be7096",
+      "title": "Leadership: Practical Leadership Skills",
+      "value": "298.78",
+      "customer": [],
+      "date": "2020-08-22 22:43:08",
+      "date_payment": null,
+      "status": "waiting",
+      "url_return": "http:\/\/www.meusite.com\/retorno\/pay\/1903"
+    },
+    {
+      "id": "1903",
+      "id_banksul": "Ox70b94000",
+      "title": "Leadership: Practical Leadership Skills",
+      "value": "198.78",
+      "customer": [],
+      "date": "2020-08-22 19:38:42",
+      "date_payment": null,
+      "status": "waiting",
+      "url_return": "http:\/\/www.meusite.com\/retorno\/pay\/1903"
+    }
+  ]
+}
+```
+** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+** date_payment - trata-se de todas as faturas pagas.
 
 
 ## Dúvidas
