@@ -11,6 +11,7 @@ Documentação da API para usuários e parceiros do BankSul.
 2. [User](#user)    
 3. [Bank](#bank)
     1. [Bank - Balance](#bank---balance)
+    1. [Bank - Statement](#bank---statement)
 3. [Dúvidas](#dúvidas)
 
 ## Visão geral
@@ -491,7 +492,114 @@ Resposta:
   * `BRL` - Saldo disponível em Reais 
   * `BTC` - Saldo disponível em Bitcoin 
 
+### Bank - Statement
 
+Endpoint: `/v2/bank/statement`
+
+Query Parameters:
+
+* `date_min` - Data inicial (date)
+* `date_max` - Data Final   (date)
+* `limit` - Quantidade de registros retornados (integer | required)
+* `order_by` - ASC ou DESC (string | required)
+
+Exemplo em PHP:
+
+```php
+
+$data_string = json_encode(array(
+      'date_min' => '2020-01-01',
+      'date_max' => '2020-12-31',
+      'limit' => 100,
+      'order_by' => 'asc',  
+     ));
+
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.banksul.com/v2/bank/statement',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => false,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => $data_string,
+    CURLOPT_HTTPHEADER => array(
+      "Content-Type: application/json",
+      'Content-Length: ' . strlen( $data_string ),
+      'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI3MWVlNDVhM2MwZGI5YTk4NjVmNzMxM2RkMzM3MmNmNjBkY2E2NDc5ZDQ2MjYxZjM1NDJlYjkzNDZlNGEwNGQ2IiwiZW1haWwiOiJjb250YXRvQG1heGlzcGx1cy5jb20iLCJpYXQiOjE1OTgzMTI5MzV9.1QffyVA8PwPH7QP8fdEFUx6MStk-_l52K_kTevHnGBA'
+    ),
+  ));
+
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+
+  curl_close($curl);
+
+  if ($err) {
+    echo "cURL Error #:" . $err;
+  } else {
+    echo $response;
+  }
+
+```
+
+Resposta:
+
+```json
+ {
+  "success": true,
+  "data": [
+    {
+      "id": "OxdJL4FKYxQMY",
+      "value": "R$ 295.00 C",
+      "log": "Crédito Boleto - Recarga via Boleto",
+      "date": "2020-07-30 22:40:46"
+    },
+    {
+      "id": "Oxgp7VSZ7N2rA",
+      "value": "R$ 22.30 D",
+      "log": "Transferência Enviada - Transferência enviada para Juliano Silva (jlianos)",
+      "date": "2020-07-30 23:36:29"
+    },
+    {
+      "id": "OxcVmCCdgBl8k",
+      "value": "R$ 100.00 C",
+      "log": "Crédito Banksul - (OxcVmCCdgBl8k)",
+      "date": "2020-08-10 19:51:16"
+    },
+    {
+      "id": "OxYimR9aGu4I",
+      "value": "R$ 200.00 C",
+      "log": "Crédito Banksul - Valor creditado pela Banksul (OxYimR9aGu\/4I)",
+      "date": "2020-08-10 19:53:14"
+    },
+    {
+      "id": "Ox4YYrlhan9fo",
+      "value": "R$ 200.00 D",
+      "log": "Estorno Banksul - Valor estornado por Banksul (Ox4YYrlhan9fo)",
+      "date": "2020-08-10 19:54:15"
+    },
+    {
+      "id": "OxZf62hdfpwI",
+      "value": "BTC 0.10000000 C",
+      "log": "Crédito BTC - Valor creditado por Banksul (OxZf62hdfpwI)",
+      "date": "2020-08-10 19:55:07"
+    },
+    {
+      "id": "OxRKMvXuKDycQ",
+      "value": "BTC 0.00500000 D",
+      "log": "Estorno BTC - Valor estornado por Banksul (OxRKMvXuKDycQ)",
+      "date": "2020-08-10 20:08:36"
+    }
+  ]
+}
+```
+** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+** date_payment - trata-se de todas as faturas pagas.
 
 ## Dúvidas
 
