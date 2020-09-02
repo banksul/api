@@ -82,7 +82,7 @@ $data = json_encode(array(
   $curl = curl_init();
 
   curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://api.banksul.com/v2/checkout/update',
+    CURLOPT_URL => 'https://api.banksul.com/v2/checkout/create',
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
