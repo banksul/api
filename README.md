@@ -12,6 +12,7 @@ Documentação da API para usuários e parceiros do BankSul.
 3. [Bank](#bank)
     1. [Bank - Balance](#bank---balance)
     1. [Bank - Statement](#bank---statement)
+    1. [Bank - Transaction](#bank---Transaction)
 3. [Dúvidas](#dúvidas)
 
 ## Visão geral
@@ -597,9 +598,96 @@ Resposta:
   ]
 }
 ```
-** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
-** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
-** date_payment - trata-se de todas as faturas pagas.
+** `customer` - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+** `status` - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+** `date_payment` - trata-se de todas as faturas pagas.
+
+
+
+
+
+
+
+
+
+
+### Bank - Transaction
+
+Endpoint: `/v2/bank/transaction/:id`
+
+Query Parameters:
+
+* `id` - hash da transacao (string | required)
+
+Exemplo em PHP:
+
+```php
+
+$id = 'Ox2b3f81c9';
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.banksul.com/v2/bank/transaction/'.$id,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => false,
+  CURLOPT_HTTP_VERSION =>
+  CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "Content-Type: application/json",
+    'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzZDkxNGY5MzQ4YzljYzBmZjhhNzk3MTY3MDBiOWZjZDRkMmYzZTcxMTYwODAwNGViOGYxMzhiY2JhN2YxNGQ5IiwiZW1haWwiOiJ3c2NvcGVsKzFAZ21haWwuY29tIiwiaWF0IjoxNTk4OTc0ODE3fQ.VjD7mefMIoas62tJ9szwCSF-iS-fcGA2JJNIHlfNLgw'
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+
+```
+
+Resposta:
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "Ox2b3f81c9",
+      "value": "9.90",
+      "date": "2020-09-08 14:35:01",
+      "userSent": {
+        "name": "Wanderson Scopel Nunes",
+        "user": "wscopel",
+        "email": "wscopel+1@gmail.com"
+      },
+      "userReceived": {
+        "name": "HELIO SEVERO BLANK",
+        "user": "blanksevero",
+        "email": "helio.maxis@gmail.com"
+      }
+    }
+  ]
+}
+
+```
+
+** `value` - Valor em reais da transaçāo.
+** `date` - Data e horario da transaçāo
+** `userSent` - usuario que realizou a transferencia.
+** `userReceived` - usuario que recebeu a transferencia.
+
+
+
 
 ## Dúvidas
 
