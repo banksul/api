@@ -277,8 +277,8 @@ Resposta:
   }
 }
 ```
-** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
-** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+* customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+* status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
 
 
 ### Checkout - Buscar
@@ -370,9 +370,9 @@ Resposta:
   ]
 }
 ```
-** customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
-** status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
-** date_payment - trata-se de todas as faturas pagas.
+* customer - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+* status - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+* date_payment - trata-se de todas as faturas pagas.
 
 
 
@@ -530,7 +530,7 @@ $data_string = json_encode(array(
     CURLOPT_HTTPHEADER => array(
       "Content-Type: application/json",
       'Content-Length: ' . strlen( $data_string ),
-      'Authentication: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiI3MWVlNDVhM2MwZGI5YTk4NjVmNzMxM2RkMzM3MmNmNjBkY2E2NDc5ZDQ2MjYxZjM1NDJlYjkzNDZlNGEwNGQ2IiwiZW1haWwiOiJjb250YXRvQG1heGlzcGx1cy5jb20iLCJpYXQiOjE1OTgzMTI5MzV9.1QffyVA8PwPH7QP8fdEFUx6MStk-_l52K_kTevHnGBA'
+      'Authentication: eyJ0eXAiaOiJKV1QiLCJhbGciOiaJIUzI1NiJ9.eyJ1aWQiOiI3MWVlNDVhM2MwZGI5YTk4NjVmNzMxM2RkMzM3MmNmNjBkY2E2NDc5ZDQ2MjYxZjM1NDJlYjkzNDZlNGEwNGQ2IiwiZW1haWwiOiJjb250YXRvQG1heGlzcGx1cy5jb20iLCJpYXQiOjE1OTgzMTI5MzV9.1QffyVA8PwPH7QP8fdEFUx6MStk-_l52K_kTevHnGBA'
     ),
   ));
 
@@ -598,9 +598,9 @@ Resposta:
   ]
 }
 ```
-** `customer` - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
-** `status` - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
-** `date_payment` - trata-se de todas as faturas pagas.
+* `customer` - name, user, email. Caso tenha acontecido alguma interação no checkout, você terá os dados do cliente. Não significa que o cliente tenha efetuado o pagamento. Confira o status da transação.
+* `status` - paid (pago) | canceled (cancelado) | waiting (aguardando pagamento ou interação do cliente.)
+* `date_payment` - trata-se de todas as faturas pagas.
 
 
 
@@ -623,7 +623,7 @@ Exemplo em PHP:
 
 ```php
 
-$id = 'Ox2b3f81c9';
+$id = 'Ox2b3f81ac9';
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
@@ -666,14 +666,14 @@ Resposta:
       "value": "9.90",
       "date": "2020-09-08 14:35:01",
       "userSent": {
-        "name": "Wanderson Scopel Nunes",
-        "user": "wscopel",
-        "email": "wscopel+1@gmail.com"
+        "name": "Juliano Sonz",
+        "user": "jukaz",
+        "email": "jukas@gmail.com"
       },
       "userReceived": {
-        "name": "HELIO SEVERO BLANK",
-        "user": "blanksevero",
-        "email": "helio.maxis@gmail.com"
+        "name": "Flavio Nil",
+        "user": "flavinu",
+        "email": "flavinu@gmail.com"
       }
     }
   ]
@@ -681,10 +681,10 @@ Resposta:
 
 ```
 
-** `value` - Valor em reais da transaçāo.
-** `date` - Data e horario da transaçāo
-** `userSent` - usuario que realizou a transferencia.
-** `userReceived` - usuario que recebeu a transferencia.
+* `value` - Valor em reais da transaçāo.
+* `date` - Data e horario da transaçāo
+* `userSent` - usuario que realizou a transferencia.
+* `userReceived` - usuario que recebeu a transferencia.
 
 
 
