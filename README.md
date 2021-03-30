@@ -13,6 +13,7 @@ Documentação da API para usuários e parceiros do BankSul.
     1. [Bank - Balance](#bank---balance)
     1. [Bank - Statement](#bank---statement)
     1. [Bank - Transaction](#bank---Transaction)
+    1. [Bank - withdrawal](#bank---withdrawal)
 3. [Dúvidas](#dúvidas)
 
 ## Visão geral
@@ -686,6 +687,65 @@ Resposta:
 * `userSent` - usuario que realizou a transferencia.
 * `userReceived` - usuario que recebeu a transferencia.
 
+
+
+
+
+### Bank - withdrawal
+
+Endpoint: `/v2/bank/withdrawal`
+
+Query Parameters:
+
+* `user` - usuario valido banksul (date)
+* `value` - valor solicitado   (decimal)
+* `cod` - codigo da transferencia (integer | required)
+* `log` - comentario da transferencia (string)
+* `auto` - Tipo da Transferencia (integer | required)
+* `url_return` - Url de retorno para baixa (string)
+
+Exemplo em PHP:
+
+```php
+
+$data_string = json_encode(array(
+      'user' => 'banksul',
+      'value' => 100.00,
+      'cod' => 989999,
+      'log' => 'credito em conta',  
+      'auto' => 1,  
+      'url_return' => 'https://www.seusite.com.retorno/withdrawal/989999' 
+     ));
+
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.banksul.com/v2/bank/withdrawal',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => false,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => $data_string,
+    CURLOPT_HTTPHEADER => array(
+      "Content-Type: application/json",
+      'Content-Length: ' . strlen( $data_string ),
+      'Authentication: eyJ0eXAiaOiJKV1QiLCJhbGciOiaJIUzI1NiJ9.eyJ1aWQiOiI3MWVlNDVhM2MwZGI5YTk4NjVmNzMxM2RkMzM3MmNmNjBkY2E2NDc5ZDQ2MjYxZjM1NDJlYjkzNDZlNGEwNGQ2IiwiZW1haWwiOiJjb250YXRvQG1heGlzcGx1cy5jb20iLCJpYXQiOjE1OTgzMTI5MzV9.1QffyVA8PwPH7QP8fdEFUx6MStk-_l52K_kTevHnGBA'
+    ),
+  ));
+
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+
+  curl_close($curl);
+
+  if ($err) {
+    echo "cURL Error #:" . $err;
+  } else {
+    echo $response;
+  }
 
 
 
